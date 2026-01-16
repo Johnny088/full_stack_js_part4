@@ -1,0 +1,24 @@
+{
+  "name": "fullstack_js_part4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Johnny088/full_stack_js_part4.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Johnny088/full_stack_js_part4/issues"
+  },
+  "homepage": "https://github.com/Johnny088/full_stack_js_part4#readme",
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}
