@@ -1,14 +1,15 @@
 // const { describe } = require('yargs');
 const { createUser, filterAdults, getUserNames } = require('../src/user.js');
-const user1 = createUser('Max', 20);
-const user2 = createUser('Bob', 17);
-const user3 = createUser('Marta', 15);
-const user4 = createUser('Monica', 25);
-const users1 = [user1, user2, user3, user4];
-const users2 = [user2, user3];
-describe('test user funtions', () => {
+let user1, user2, user3, user4;
+let users1, users2;
+describe('test user functions', () => {
   beforeEach(() => {
-    console.log('start test');
+    user1 = createUser('Max', 20);
+    user2 = createUser('Bob', 17);
+    user3 = createUser('Marta', 15);
+    user4 = createUser('Monica', 25);
+    users1 = [user1, user2, user3, user4];
+    users2 = [user2, user3];
   });
 
   test('creating a new user', () => {
