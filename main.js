@@ -63,7 +63,7 @@ function startHtml() {
 // ---------------------------- getting books ---------------------
 const gettingBooks = list => {
   let data = getData();
-  if (!data) {
+  if (!data || data.length === 0) {
     setData();
     data = getData();
   }
@@ -168,3 +168,4 @@ const getData = () => {
   return data;
 };
 startHtml();
+// ------------------
