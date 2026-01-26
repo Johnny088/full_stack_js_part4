@@ -58,7 +58,6 @@ function startHtml() {
   container.append(list, descriptionDiv, addBtn);
   bookHandler(descriptionDiv, list);
   addBookHandler(descriptionDiv, list);
-  removeBook(descriptionDiv, list);
 }
 // ---------------------------- getting books ---------------------
 const gettingBooks = list => {
@@ -72,24 +71,34 @@ const gettingBooks = list => {
 };
 
 const renderBooks = list => {
-  // list.innerHTML = '';
   const booksList = books
     .map(({ title, id }) => {
-      return `<li><h3>${title}</h3><button id="${id}">view details</button></li>`;
+      return `<li id="${id}"><h3>${title}</h3><button>view details</button><button class="delete">delete</button></li>`;
     })
     .join('');
-  // list.insertAdjacentHTML('afterbegin', booksList);
   list.innerHTML = booksList;
 };
 // ----------------------------------------- button handler to describe books  ------------------------
 const bookHandler = (descriptionDiv, list) => {
   list.addEventListener('click', e => {
-    if (e.target.nodeName === 'BUTTON') {
-      const id = Number(e.target.id);
+    if (
+      e.target.nodeName === 'BUTTON' &&
+      e.target.textContent === 'view details'
+    ) {
+      const id = Number(e.target.parentNode.id);
       const { title, author, year, description } = books.find(
         book => book.id === id,
       );
-      descriptionDiv.innerHTML = `<h3>${title}</h3> <p>${author}</p> <p>${year}</p> <p>${description}</p><button id=${id} class="delete">remove book</button>`;
+      descriptionDiv.innerHTML = `<h3>${title}</h3> <p>${author}</p> <p>${year}</p> <p>${description}</p>`;
+    } else if (
+      e.target.nodeName === 'BUTTON' &&
+      e.target.textContent === 'delete'
+    ) {
+      console.log(e.target.textContent);
+      e.target.parentNode.remove();
+      const id = Number(e.target.parentNode.id);
+      books = books.filter(item => item.id !== id);
+      localStorage.setItem('booksData', JSON.stringify(books));
     }
   });
 };
@@ -99,16 +108,7 @@ const addBookHandler = (descriptionDiv, list) => {
   const addNewBook = document.querySelector('.form_btn');
   addNewBook.addEventListener('click', () => addBook(descriptionDiv, list));
 };
-// --------------------------------- listener for removing books ---------------------
-function removeBook(descriptionDiv, list) {
-  descriptionDiv.addEventListener('click', e => {
-    if (e.target.nodeName === 'BUTTON') {
-      const id = Number(e.target.id);
-      books = books.filter(item => item.id !== id);
-      localStorage.setItem('booksData', JSON.stringify(books));
-    }
-  });
-}
+
 // ----------------------------------------
 const addBook = (descriptionDiv, list) => {
   descriptionDiv.innerHTML = '';
@@ -117,10 +117,10 @@ const addBook = (descriptionDiv, list) => {
   }
   const form = document.createElement('form');
   form.classList.add('submitForm');
-  form.innerHTML = `<input type="text" required placeholder="Title"  name="bookTitle"/>
-    <input type="text" required placeholder="Author" name="author"/>
-    <input type="text" required placeholder="Year" name="year"/>
-    <textarea type="text" required placeholder="Description" name="description" rows="5" cols="50"></textarea>
+  form.innerHTML = `<input type="text" placeholder="Title"  name="bookTitle"/>
+    <input type="text" placeholder="Author" name="author"/>
+    <input type="text"  placeholder="Year" name="year"/>
+    <textarea type="text" placeholder="Description" name="description" rows="5" cols="50"></textarea>
     <button>save</button>`;
   descriptionDiv.append(form);
   form.addEventListener('submit', e => {
@@ -128,11 +128,24 @@ const addBook = (descriptionDiv, list) => {
     const title = form.bookTitle.value;
     const author = form.author.value;
     const year = Number(form.year.value);
-    if (Number.isNaN(year) || year < 0) {
-      alert('The year have to be a number and more or equils 0');
+    const description = form.description.value;
+    let error = '';
+    if (Number.isNaN(year) || year <= 0) {
+      error += '1) - Year must be a number, and >= 0\n';
+    }
+    if (!title) {
+      error += '2) - The title is requared\n';
+    }
+    if (!author) {
+      error += '3) - The author is requared\n';
+    }
+    if (!description) {
+      error += '4) - The description is requared';
+    }
+    if (error !== '') {
+      alert(error);
       return;
     }
-    const description = form.description.value;
     const id = books.reduce((acc, books) => Math.max(acc, books.id), 0) + 1;
     const newBook = {
       id: id,
@@ -150,7 +163,8 @@ const addBook = (descriptionDiv, list) => {
 // -------------------------- rendering a new book -------------------
 function renderNewBook(book, list) {
   const item = document.createElement('li');
-  item.innerHTML = `<h3>${book.title}</h3><button id="${book.id}">view details</button>`;
+  item.id = book.id;
+  item.innerHTML = `<h3>${book.title}</h3><button>view details</button><button class="delete">delete</button></li>`;
   list.append(item);
 }
 
