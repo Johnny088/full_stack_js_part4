@@ -78,7 +78,7 @@ const renderBooks = list => {
     .join('');
   list.innerHTML = booksList;
 };
-// ----------------------------------------- button handler to describe books  ------------------------
+// ----------------------------------------- button handler to describe & to delete books  ------------------------
 const bookHandler = (descriptionDiv, list) => {
   list.addEventListener('click', e => {
     if (
@@ -95,8 +95,13 @@ const bookHandler = (descriptionDiv, list) => {
       e.target.textContent === 'delete'
     ) {
       console.log(e.target.textContent);
-      e.target.parentNode.remove();
       const id = Number(e.target.parentNode.id);
+      e.target.parentNode.remove();
+      const removed = setTimeout(
+        () => (descriptionDiv.innerHTML = `<h2>the book was deleted</h2>`),
+        1000,
+      );
+      setTimeout(() => (descriptionDiv.innerHTML = ''), 4000);
       books = books.filter(item => item.id !== id);
       localStorage.setItem('booksData', JSON.stringify(books));
     }
