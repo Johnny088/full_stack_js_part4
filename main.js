@@ -134,17 +134,18 @@ function addBook() {
     const year = Number(form.year.value);
     const description = form.description.value.trim();
     let error = '';
+    let n = 0;
     if (Number.isNaN(year) || year <= 0 || !Number.isInteger(year)) {
-      error += '1) - Year must be an integer, and >= 0\n';
+      error += `${n + 1}) - Year must be an integer, and >= 0\n`;
     }
     if (!title) {
-      error += '2) - The title is requared\n';
+      error += `${n + 1}) - The title is requared\n`;
     }
     if (!author) {
-      error += '3) - The author is requared\n';
+      error += `${n + 1}) - The author is requared\n`;
     }
     if (!description) {
-      error += '4) - The description is requared';
+      error += `${n + 1}) - The description is requared`;
     }
     if (error !== '') {
       alert(error);
