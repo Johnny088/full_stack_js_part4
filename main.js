@@ -53,12 +53,12 @@ root.append(container);
 const addBtn = document.createElement('button');
 addBtn.textContent = 'add new book';
 addBtn.classList.add('form_btn');
-gettingBooks();
+loadBooks();
 container.append(list, descriptionDiv, addBtn);
 bookHandler();
 addBookHandler();
 // ---------------------------- getting books first time ---------------------
-function gettingBooks() {
+function loadBooks() {
   let data = getData();
   if (!data || data.length === 0) {
     setData(books);
@@ -70,7 +70,7 @@ function gettingBooks() {
 function renderBooks(data) {
   const booksList = data
     .map(({ title, id }) => {
-      return `<li id="${id}"><h3>${title}</h3><button>view details</button><button class="delete">delete</button></li>`;
+      return `<li id="${id}"><h3>${title}</h3><button data-id="view">view details</button><button class="delete" data-id="del">delete</button></li>`;
     })
     .join('');
   list.innerHTML = booksList;
@@ -81,18 +81,14 @@ function bookHandler() {
     if (e.target.nodeName === 'BUTTON') {
       let data = getData();
       if (data.length === 0) return;
-      if (e.target.textContent === 'view details') {
-        {
-          const id = Number(e.target.parentNode.id);
-          const book = data.find(book => book.id === id);
-          if (!book) return;
-          const { title, author, year, description } = book;
-          descriptionDiv.innerHTML = `<h3>${title}</h3> <p>${author}</p> <p>${year}</p> <p>${description}</p>`;
-        }
-      } else if (e.target.textContent === 'delete') {
-        // console.log(e.target.textContent);
+      if (e.target.dataset.id === 'view') {
         const id = Number(e.target.parentNode.id);
-        // e.target.parentNode.remove();
+        const book = data.find(book => book.id === id);
+        if (!book) return;
+        const { title, author, year, description } = book;
+        descriptionDiv.innerHTML = `<h3>${title}</h3> <p>${author}</p> <p>${year}</p> <p>${description}</p>`;
+      } else if (e.target.dataset.id === 'del') {
+        const id = Number(e.target.parentNode.id);
         data = data.filter(item => item.id !== id);
         setData(data);
         renderBooks(data);
@@ -136,16 +132,16 @@ function addBook() {
     let error = '';
     let n = 0;
     if (Number.isNaN(year) || year <= 0 || !Number.isInteger(year)) {
-      error += `${n + 1}) - Year must be an integer, and >= 0\n`;
+      error += `${(n += 1)}) - Year must be an integer, and >= 0\n`;
     }
     if (!title) {
-      error += `${n + 1}) - The title is requared\n`;
+      error += `${(n += 1)}) - The title is requared\n`;
     }
     if (!author) {
-      error += `${n + 1}) - The author is requared\n`;
+      error += `${(n += 1)}) - The author is requared\n`;
     }
     if (!description) {
-      error += `${n + 1}) - The description is requared`;
+      error += `${(n += 1)}) - The description is requared`;
     }
     if (error !== '') {
       alert(error);
@@ -161,7 +157,6 @@ function addBook() {
       description: description,
     };
     data = [...data, newBook];
-    console.log(data);
     setData(data);
     renderBooks(data);
     form.remove();
