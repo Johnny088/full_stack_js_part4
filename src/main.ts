@@ -6,7 +6,7 @@ const emptyValue: null = null;
 const notAssigned: undefined = undefined;
 
 // task 2
-let something: string | number | boolean;
+let something: unknown;
 something = 2;
 something = true;
 something = 'string';
@@ -68,11 +68,11 @@ test = 'test';
 
 // task 8
 
-function formatId(value: string | number) {
+function formatId(value: string | number): string {
   if (typeof value === 'string') {
-    console.log('abc');
-  } else if (typeof value === 'number') {
-    console.log(123);
+    return 'ID: abc';
+  } else {
+    return 'ID: 123';
   }
 }
 
@@ -109,7 +109,8 @@ const unionArr: (string | number)[] = [
 
 // task 13
 function sum(value1: number, value2: number): number {
-  return (value1 += value2);
+  const res = value1 + value2;
+  return res;
 }
 
 //task 14
@@ -124,11 +125,12 @@ function totalPrice(price: number, discount: number): number {
 }
 
 // task16
-function handleResponse(status: Status, data: unknown): number | string {
+type newStatus = 'success' | 'error';
+function handleResponse(status: newStatus, data: unknown): number | string {
   if (status === 'success' && typeof data === 'string') {
     return data.length;
   } else if (status === 'success' && typeof data === 'number') {
-    return data * data;
+    return data * 2;
   }
   return 'something went wrong';
 }
