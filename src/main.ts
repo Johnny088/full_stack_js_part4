@@ -82,19 +82,59 @@ function getItemId<T extends { id: number }>(item: T): number {
 const id = getItemId(order);
 console.log(id);
 // --------------------------------------- task 7 -----------------------------------
+function simulateRequest(): Promise<number> {
+  const number: number = Math.floor(Math.random() * 100);
+  return new Promise(resolve => {
+    setTimeout(() => resolve(number), 1000);
+  });
+}
+simulateRequest().then(result => console.log(result));
 
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
-// --------------------------------------- task 1 -----------------------------------
+// --------------------------------------- task 8 -----------------------------------
+async function loadStatistics(): Promise<number> {
+  const number1: number = await simulateRequest();
+  const number2: number = await simulateRequest();
+  return number1 + number2;
+}
+loadStatistics().then(result => console.log(result));
+// --------------------------------------- task 9 -----------------------------------
+// interface Worker{
+//   name: string,
+//   salary: number
+// }
+class Employee {
+  name: string;
+  salary: number;
+  constructor(name: string, salary: number) {
+    this.name = name;
+    this.salary = salary;
+  }
+  getInfo(): string {
+    return `name: ${this.name} Salary: ${this.salary}$`;
+  }
+}
+const worker1 = new Employee('Johnny', 4800);
+const info: string = worker1.getInfo();
+console.log(info);
+// --------------------------------------- task 10 -----------------------------------
+class Developer extends Employee {
+  programingLanguage: string;
+  constructor(name: string, salary: number, programingLanguage: string) {
+    super(name, salary);
+    this.programingLanguage = programingLanguage;
+  }
+  getInfo(): string {
+    return `${super.getInfo()} Programming Language: ${this.programingLanguage}`;
+  }
+}
+const worker2 = new Developer('Kane', 5000, 'JavaScript');
+const info2: string = worker2.getInfo();
+console.log(info2);
+// --------------------------------------- task 11 -----------------------------------
+// interface Payable{
+//   pay(amount: number): void{
+
+//   }
+// }
+// --------------------------------------- task 12 -----------------------------------
+// --------------------------------------- task 13 -----------------------------------
