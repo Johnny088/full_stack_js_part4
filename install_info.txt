@@ -1,0 +1,27 @@
+npm i -global ==> installing global ts
+
+
+
+                          install to the project ==>
+
+npm create vite@latest ==>
+
+need to install the following packages: Y ==>
+
+
+project name :    .    ==>           //it means to make a project in the project's root directory
+
+
+
+current directory is not empty. Please choose how to proceed:           ignore files and continue  ==>
+
+
+Package name: "Project_name" ==>
+
+select framework: Vanilla ==>
+
+select a variant: TypeScript ==>
+
+Use Vite 8 Beta (Experimental)?:  No ==>
+
+install with npm and start now?: yes...
