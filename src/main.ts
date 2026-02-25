@@ -97,12 +97,12 @@ async function loadStatistics(): Promise<number> {
   return number1 + number2;
 }
 loadStatistics().then(result => console.log(result));
-// --------------------------------------- task 9 -----------------------------------
-// interface Worker{
-//   name: string,
-//   salary: number
-// }
-class Employee {
+// --------------------------------------- task 9 ------------------------------------
+// --------------------------------------- task 11 -----------------------------------
+interface Payable {
+  pay(amount: number): void;
+}
+class Employee implements Payable {
   name: string;
   salary: number;
   constructor(name: string, salary: number) {
@@ -111,6 +111,9 @@ class Employee {
   }
   getInfo(): string {
     return `name: ${this.name} Salary: ${this.salary}$`;
+  }
+  pay(amount: number): void {
+    this.salary += amount;
   }
 }
 const worker1 = new Employee('Johnny', 4800);
@@ -130,11 +133,44 @@ class Developer extends Employee {
 const worker2 = new Developer('Kane', 5000, 'JavaScript');
 const info2: string = worker2.getInfo();
 console.log(info2);
-// --------------------------------------- task 11 -----------------------------------
-// interface Payable{
-//   pay(amount: number): void{
+worker2.pay(1999);
+console.log(worker2.getInfo());
 
-//   }
-// }
 // --------------------------------------- task 12 -----------------------------------
+abstract class Transport {
+  speed!: number;
+  abstract move(): void;
+}
+class Bicycle extends Transport {
+  speed: number = 10;
+  move(): void {
+    console.log(`My bycicle goes ${this.speed}km/h`);
+  }
+}
+const bicycle = new Bicycle();
+bicycle.move();
+
+class Car extends Transport {
+  speed: number = 100;
+  move(): void {
+    console.log(`My bycicle goes ${this.speed}km/h`);
+  }
+}
+const car = new Car();
+car.move();
 // --------------------------------------- task 13 -----------------------------------
+type ApiResult<T> = {
+  data: T;
+  success: boolean;
+  timestamp: Date;
+};
+
+function geResult<T>(value: T): ApiResult<T> {
+  return {
+    data: value,
+    success: true,
+    timestamp: new Date(),
+  };
+}
+console.log(geResult<Order>(order));
+console.log(geResult<Developer>(worker2));
