@@ -139,24 +139,31 @@ console.log(worker2.getInfo());
 // --------------------------------------- task 12 -----------------------------------
 abstract class Transport {
   speed!: number;
+  constructor(speed: number) {
+    this.speed = speed;
+  }
   abstract move(): void;
 }
 class Bicycle extends Transport {
-  speed: number = 10;
+  // constructor(speed: number) {
+  //   super(speed);
+  // }
   move(): void {
     console.log(`My bycicle goes ${this.speed}km/h`);
   }
 }
-const bicycle = new Bicycle();
+const bicycle = new Bicycle(10);
 bicycle.move();
 
 class Car extends Transport {
-  speed: number = 100;
+  // constructor(speed: number) {
+  //   super(speed);
+  // }
   move(): void {
-    console.log(`My bycicle goes ${this.speed}km/h`);
+    console.log(`My car goes ${this.speed}km/h`);
   }
 }
-const car = new Car();
+const car = new Car(100);
 car.move();
 // --------------------------------------- task 13 -----------------------------------
 type ApiResult<T> = {
